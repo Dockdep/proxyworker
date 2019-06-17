@@ -18,7 +18,7 @@ namespace TasksWithTimeouts
         {
             WebRequest.DefaultWebProxy = new WebProxy();
             string serviceUri =
-                "http://falcon.proxyrotator.com:51337/?apiKey=rEsZVJbnu3YpocWHTU8StAzG62L9ayxw&get=true";
+                "http://falcon.proxyrotator.com:51337/?apiKey=&get=true";
             string jsonString = string.Empty;
             string proxyAddress = string.Empty;
 
