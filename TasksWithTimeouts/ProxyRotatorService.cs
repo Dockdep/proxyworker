@@ -14,11 +14,11 @@ namespace TasksWithTimeouts
     {
         
         
-        private void ChangeProxy()
+        public void ChangeProxy()
         {
             WebRequest.DefaultWebProxy = new WebProxy();
             string serviceUri =
-                "http://falcon.proxyrotator.com:51337/?apiKey=&get=true";
+                "http://falcon.proxyrotator.com:51337/?apiKey=rEsZVJbnu3YpocWHTU8StAzG62L9ayxw&get=true";
             string jsonString = string.Empty;
             string proxyAddress = string.Empty;
 
@@ -38,11 +38,13 @@ namespace TasksWithTimeouts
         }
         public async Task WebAccessViaProxyRotatorApi(string url)
         {
-   
+            var cts = new CancellationTokenSource();
+            cts.CancelAfter(4000);
+
             // create a request
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
 
-            using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+            using (WebResponse response = await request.GetResponseAsync(cts.Token))
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream ?? throw new InvalidOperationException()))
             {
@@ -55,11 +57,7 @@ namespace TasksWithTimeouts
         {
             var sPattern =  new Regex(@"<p class='ip-address'>\n?(.*)\n?</p>");
             var result =  sPattern.Match(source);
-            if (result.Groups.Count > 0)
-            {
-                return result.Groups[1].Value;
-            }
-            return "ip address not found";
+            return result.Groups.Count > 0 ? result.Groups[1].Value : "ip address not found";
         }
     }
 

@@ -24,6 +24,7 @@ namespace TasksWithTimeouts
                 }
                 catch (Exception io)
                 {
+                    Console.WriteLine("Exception:"+io.GetType().Name);
                     Console.WriteLine("Exception:"+io.Message);
                     
                     rotator.ChangeProxy();
